@@ -15,16 +15,37 @@ state ={
 }
 
 add = () => {
-  this.setState({count:1})}
-  //state 직접 변경하지 말고 setState를 사용하라. 그럼 state와 render 함수를 둘 다 refresh 해줌.(new state와 함께 render 재호출)  
-minus = () => {
-  this.setState({count:-1})}
+  this.setState({count:this.state.count + 1})}
+  /*state 직접 변경하지 말고(this.state.count 바로 쓰지 말고) 
+  setState를 사용하라. 그럼 state와 render 함수를 둘 다 refresh 해줌.
+  (new state와 함께 render 재호출)*/  
+
+  minus = () => {
+  this.setState({count:this.state.count + -1})}
+  /*count : this.state.count 이렇게 state에 의존하는 방식은 성능 문제로 비추 
+  this.setState(current => ({count : current.count + 1 })로 쓰는 방법 있음*/
+
+
+  componentDidMount(){
+    console.log("component rendered");
+  } //render 함수 처음 실행 되었다고 알려줌
+
+  componentDidUpdate(){
+    console.log("I just updated");
+  } //update 했을 때(add, minus button 눌렀을 때) render 함수 실행되고 update 되었다고 알려줌)
+
+  /*component에 render 함수 위에 써야 코드가 죽지 않음.. 왜지??
+  -> component life cycle method -> component 생성될 때 render 전(후)에 호출되는 함수라서?*/
+
 
 //react component는 render method를 가지고 있고, App component는 react component에서 확장했기 때문에 역시 render method를 가지고 있다.
 //react는 자동으로 class component의 render method를 실행한다
  render(){
-   
+
+   console.log("I'm rendering");
+
    return (
+    
     <div>
       <h1>The number is {this.state.count}</h1>
       {/*class라서 그냥 {state.count}라고 하면 안 되고 this를 붙여줘야 함*/}

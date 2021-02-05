@@ -2,67 +2,38 @@ import React from "react";
 //새로운 버전에서는 import 안해줘도 자동으로 되는듯
 import propTypes from "prop-types"
 
-function Food ({name, picture, rating}) {
-  
-  /*props(propertys)의 이름을 Food component의 매개변수 안에 
-  {} 안에 넣어서 데이터를 가져올 수 있다*/
+//function component는 function이라 뭔가를 return해서 screen에 표시
+//class component는 class라서 return을 못하지만 react component에서 확장해서 render method를 사용하여 screen에 표시
+//동적인, 변화하는 데이터를 넣는 state object를 사용하려고 class component를 씀
 
-  return <div>
-    <h2>I love {name}</h2>
-    <h4>{rating}/5.0</h4>
-    <img src={picture} alt={name} / >
-    </div>;
+class App extends React.Component{
+//App이라는 이름을 가진 class component는 react component에서 확장된 것
+
+//state에 바꾸고 싶은 데이터를 넣으면 됨
+state ={
+  count:0 //디폴트값 0을 가짐
 }
 
-Food.propTypes = {
-  name : propTypes.string.isRequired,
-  picture : propTypes.string,
-  rating : propTypes.number
-}
+add = () => {console.log("add")}
+minus = () => {console.log("minus")}
 
-const foodILike = [
-  {
-    id : 1,
-    name : "kimchi",
-    image : "https://unsplash.com/photos/4f4YZfDMLeU",
-    rating : 3.6
-  },
-  { id : 2,
-    name : "kimbap",
-    image : "https://unsplash.com/photos/0SMrPL058eU",
-    rating : 4.8
-  }
-]
+//react component는 render method를 가지고 있고, App component는 react component에서 확장했기 때문에 역시 render method를 가지고 있다.
+//react는 자동으로 class component의 render method를 실행한다
+ render(){
+   
+   return (
+    <div>
+      <h1>The number is {this.state.count}</h1>
+      {/*class라서 그냥 {state.count}라고 하면 안 되고 this를 붙여줘야 함*/}
+      <button onClick={this.add}>Add</button>
+      <button onClick={this.minus}>Minus</button>
+      {/*react는 자동으로 onClick prop이 주어짐. js에서는 onClick이나 eventListener를 등록해야 함.
+      add() 이렇게 쓰지 않음. ()는 '즉시 호출'을 의미함. 여기선 즉시가 아니라 click 됐을 때만 함수가 실행되어야 하므로 () 쓰면 안 됨!*/}
+    </div>)
+    // div 쓰면? 두 줄 이상이면? return 뒤에 () 붙여줘야 함
 
-function renderFood(dish) {
-  return <Food name={dish.name} picture={dish.image}/>
-}
+ }
 
-function App() {
-  return <div> 
-    <h1>hello!</h1> 
-    
-    <Food name="kimchi" />
-    <Food name="kimbap" />
-    {/*component에 html 형식으로 name 과 같은 데이터 저장 가능
-     Food 라는 component에 name이라는 이름의 prop(erty)에 kimchi라는 value를 부여*/}
-
-
-   {foodILike.map(dish => 
-    <Food //html처럼 , 안 씀
-    key={dish.id}
-    name={dish.name}
-    picture={dish.image}
-    rating={dish.rating} />)}
-    {/*map은 array 내 item 각각에 적용되는 함수
-     dish => 는 function(dish) 와 같은 것
-     dish 는 name과 image로 이루어진 object*/}
-    
-
-    {foodILike.map(renderFood)}
-
-    </div>
-  ;
 }
 
 

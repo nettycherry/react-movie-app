@@ -1,16 +1,40 @@
 import React from "react";
+//새로운 버전에서는 import 안해줘도 자동으로 되는듯
 
-
-function Food ({name}) {
-  return <h3>I love {name}</h3>;
+function Food ({name, picture}) {
+  return <div>
+    <h2>I love {name}</h2>
+    <img src={picture}/>
+    </div>;
 }
+
+const foodILike = [
+  {
+    name : "kimchi",
+    image : "https://unsplash.com/photos/4f4YZfDMLeU"
+  },
+  {
+    name : "kimbap",
+    image : "https://unsplash.com/photos/0SMrPL058eU"
+  }
+]
 
 function App() {
   return <div> 
     <h1>hello!</h1> 
     
     <Food name="kimchi" />
-    <Food name="ramen" />
+    <Food name="kimbap" />
+
+    {foodILike.map(dish => 
+    <Food name={dish.name}
+    picture={dish.image} />)}
+    {/*map은 array 내 item 각각에 적용되는 함수
+    dish => 는 function(dish) 와 같은 것
+    dish 는 name과 image로 이루어진 object
+    html처럼 , 안 씀*/}
+
+
 
     </div>
   ;
